@@ -1,0 +1,65 @@
+Task 2: Emotion Recognition from Speech
+
+CodeAlpha Machine Learning Internship
+
+Objective
+
+Recognize emotional categories in speech audio using audio signal processing and machine learning.
+
+Method
+
+1. Read speech WAV files.
+2. Extract 40 MFCC coefficients using Librosa.
+3. Calculate the mean and standard deviation of each coefficient (80 features per audio clip).
+4. Train a Random Forest or Support Vector Machine (SVM).
+5. Evaluate using accuracy, precision, recall, F1-score and a confusion matrix.
+
+Dataset: RAVDESS
+
+Download the RAVDESS Audio-only dataset from the official Ryerson Audio-Visual Database of Emotional Speech and Song page:
+https://zenodo.org/records/1188976
+
+Extract the audio files under data/ravdess/. Keep the original RAVDESS filenames and folder structure. The script recursively finds .wav files and reads emotion labels from the third filename field.
+
+Supported RAVDESS labels:
+
+• 01 neutral
+• 02 calm
+• 03 happy
+• 04 sad
+• 05 angry
+• 06 fearful
+• 07 disgust
+• 08 surprised
+
+Install and train
+
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+
+python main.py --data data/ravdess --classifier random_forest
+# Alternative:
+python main.py --data data/ravdess --classifier svm
+
+Predict one audio file
+
+After training:
+
+python main.py --predict path/to/audio.wav
+
+Important
+
+• Training requires the RAVDESS WAV dataset; it is not bundled because it is a large third-party dataset.
+• Results depend on the dataset, speaker split and recording conditions. A random file-level split can place clips from the same actor in both train and test sets; for a stronger experiment, evaluate with actor-independent splitting.
+• This is an educational demo. Speech emotion labels are subjective and model predictions should not be treated as reliable assessments of a person’s actual emotional state.
+
+Repository structure
+
+Task-2-Emotion-Recognition-from-Speech/
+├── data/ravdess/       # Put extracted RAVDESS audio here
+├── models/             # Trained model is saved here
+├── main.py
+├── requirements.txt
+└── README.md
